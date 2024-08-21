@@ -12,5 +12,4 @@ export class Category {
   @Column()
   @Field(() => String, { nullable: true, description: 'Name Categories' })
   name: string;
-
 }

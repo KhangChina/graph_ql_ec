@@ -22,12 +22,12 @@ type Mutation {
 }
 
 input CreateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Name Categories"""
+  name: String
 }
 
 input UpdateCategoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  """Name Categories"""
+  name: String
   id: Int!
 }
