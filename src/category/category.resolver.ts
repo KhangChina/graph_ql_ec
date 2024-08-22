@@ -15,25 +15,24 @@ export class CategoryResolver {
   }
   /*
   query {
-    findAll {
-      id,
+    category_get_all (page: 2, limit: 5) {
+      items {
+      id
       name
     }
+    totalItems,
+    totalPages,
+    currentPage,
+    itemsPerPage
+  }
   }
   */
-  @Query(() => [Category], { name: 'category_get_all' })
-  findAll() {
-    // return this.categoryService.findAll();
-    return [
-      {
-        id: 1,
-        name: "Shopper"
-      },
-      {
-        id: 2,
-        name: "Shoot"
-      },
-    ]
+  @Query(() => PaginatedCategoryResponse, { name: 'category_get_all' })
+  async category_get_all(
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
+  ) {
+    return await this.categoryService.findAllWithPagination(page, limit);
   }
   /*
   query {

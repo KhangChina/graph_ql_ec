@@ -26,8 +26,26 @@ export class CategoryService {
     return categories
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAllWithPagination(page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    const [items, totalItems] = await this.category.findAndCount({
+      skip: skip,
+      take: limit,
+    })
+
+    if (typeof totalItems !== 'number') {
+      throw new Error('Total items count must be a number');
+    }
+
+    const totalPages = Math.ceil(totalItems / limit);
+    
+    return {
+      items,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    }
   }
 
   async findOne(id: number) {
@@ -42,7 +60,7 @@ export class CategoryService {
       },
       skip: skip,
       take: limit,
-    });
+    })
 
     if (typeof totalItems !== 'number') {
       throw new Error('Total items count must be a number');
@@ -55,7 +73,7 @@ export class CategoryService {
       totalPages,
       currentPage: page,
       itemsPerPage: limit,
-    };
+    }
   }
 
   update(id: number, updateCategoryInput: UpdateCategoryInput) {
