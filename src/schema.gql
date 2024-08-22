@@ -12,6 +12,7 @@ type Category {
 
 type Query {
   category_get_all: [Category!]!
+  migration_data_test: [Category!]!
   category(id: Int!): Category!
 }
 

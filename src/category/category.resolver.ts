@@ -12,8 +12,15 @@ export class CategoryResolver {
   async createCategory(@Args('createCategoryInput') createCategoryInput: CreateCategoryInput) {
     return await this.categoryService.create(createCategoryInput);
   }
-
-  @Query(() => [Category],{ name: 'category_get_all' })
+  /*
+  query {
+    findAll {
+      id,
+      name
+    }
+  }
+  */
+  @Query(() => [Category], { name: 'category_get_all' })
   findAll() {
     //return this.categoryService.findAll();
     return [
@@ -27,13 +34,21 @@ export class CategoryResolver {
       },
     ]
   }
+  /*
+  query {
+    migration_data_test {
+      name
+    }
+  }
+  */
+  @Query(() => [Category], { name: 'migration_data_test' })
+  async migration_data_test() {
+    return await this.categoryService.migration_data_test();
+  }
 
   @Query(() => Category, { name: 'category' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return {
-      id: 1,
-      name: "Shopper"
-    }//this.categoryService.findOne(id);
+  async findOne(@Args('id', { type: () => Int }) id: number) {
+    return await this.categoryService.findOne(id);
   }
 
   @Mutation(() => Category)

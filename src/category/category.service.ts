@@ -10,23 +10,28 @@ import { faker } from '@faker-js/faker';
 export class CategoryService {
   constructor(@InjectRepository(Category) private category: Repository<Category>) { }
   async create(createCategoryInput: CreateCategoryInput) {
-    const cate = await this.category.create(createCategoryInput);
-    return await this.category.save(cate);
+    const cate = await this.category.create(createCategoryInput)
+    return await this.category.save(cate)
   }
   async migration_data_test() {
-    for (let index = 0; index < 5; index++) {
+    const categories = [];
+    for (let index = 0; index < 1000; index++) {
       const createCategoryInput: CreateCategoryInput = {
-        name : faker.commerce.department()
+        name: faker.commerce.department()
       }
+      const item = await this.create(createCategoryInput)
+      categories.push(item)
     }
+    await this.category.save(categories)
+    return categories
   }
 
   findAll() {
     return `This action returns all category`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number) {
+    return await this.category.findOne({ where: { id: id } });
   }
 
   update(id: number, updateCategoryInput: UpdateCategoryInput) {
