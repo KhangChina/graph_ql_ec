@@ -77,10 +77,12 @@ export class CategoryService {
   }
 
   update(id: number, updateCategoryInput: UpdateCategoryInput) {
+    console.log(updateCategoryInput)
     return `This action updates a #${id} category`;
   }
 
   remove(id: number) {
+    console.log(id)
     return `This action removes a #${id} category`;
   }
 }
