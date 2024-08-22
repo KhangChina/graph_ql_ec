@@ -76,9 +76,8 @@ export class CategoryService {
     }
   }
 
-  update(id: number, updateCategoryInput: UpdateCategoryInput) {
-    console.log(updateCategoryInput)
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryInput: UpdateCategoryInput) {
+    return await this.category.update(id,updateCategoryInput)
   }
 
   remove(id: number) {

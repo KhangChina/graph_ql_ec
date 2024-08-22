@@ -19,7 +19,7 @@ type PaginatedCategoryResponse {
 }
 
 type Query {
-  category_get_all(page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
+  get_all_category(page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
   migration_data_test: [Category!]!
   find_category_by_id(id: Int!): Category!
   search_categories(name: String, page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
@@ -27,7 +27,7 @@ type Query {
 
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  update_category(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(id: Int!): Category!
 }
 

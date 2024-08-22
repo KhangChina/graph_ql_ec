@@ -15,7 +15,7 @@ export class CategoryResolver {
   }
   /*
   query {
-    category_get_all (page: 2, limit: 5) {
+    get_all_category (page: 2, limit: 5) {
       items {
       id
       name
@@ -27,7 +27,7 @@ export class CategoryResolver {
   }
   }
   */
-  @Query(() => PaginatedCategoryResponse, { name: 'category_get_all' })
+  @Query(() => PaginatedCategoryResponse, { name: 'get_all_category' })
   async category_get_all(
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
@@ -77,10 +77,24 @@ query {
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,) {
     return await this.categoryService.findByNameWithPagination(name, page, limit);
   }
+  /*
+  mutation {
+    update_category(updateCategoryInput : {id:16, name:"BCO"})
+    {
+      id,
+      name
+    }
+  }
+  */
 
-  @Mutation(() => Category)
-  updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput) {
-    return this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
+  @Mutation(() => Category, { name: 'update_category' })
+  async updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput) {
+    const data = await this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
+    if (data.affected > 0) {
+      return updateCategoryInput
+    }
+    throw new Error('Update error');
+
   }
 
   @Mutation(() => Category)

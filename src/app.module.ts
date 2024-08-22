@@ -20,7 +20,7 @@ import { Category } from './category/entities/category.entity';
     password: '',
     database: 'ec',
     entities: [Category],
-    synchronize: true,
+    synchronize: false,
   }), CategoryModule],
   controllers: [AppController],
   providers: [AppService],
