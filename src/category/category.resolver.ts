@@ -97,8 +97,8 @@ query {
 
   }
 
-  @Mutation(() => Category)
-  removeCategory(@Args('id', { type: () => Int }) id: number) {
-    return this.categoryService.remove(id);
+  @Mutation(() => Category, { name: 'delete_category' })
+  async removeCategory(@Args('id', { type: () => Int }) id: number) {
+    return await this.categoryService.remove(id);
   }
 }

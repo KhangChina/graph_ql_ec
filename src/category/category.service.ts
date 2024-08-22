@@ -38,7 +38,7 @@ export class CategoryService {
     }
 
     const totalPages = Math.ceil(totalItems / limit);
-    
+
     return {
       items,
       totalItems,
@@ -77,11 +77,10 @@ export class CategoryService {
   }
 
   async update(id: number, updateCategoryInput: UpdateCategoryInput) {
-    return await this.category.update(id,updateCategoryInput)
+    return await this.category.update(id, updateCategoryInput)
   }
 
-  remove(id: number) {
-    console.log(id)
-    return `This action removes a #${id} category`;
+  async remove(id: number) {
+    return await this.category.delete(id);
   }
 }
