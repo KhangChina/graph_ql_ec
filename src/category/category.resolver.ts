@@ -3,6 +3,7 @@ import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
+import { PaginatedCategoryResponse } from './dto/paginated-category-response';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -22,7 +23,7 @@ export class CategoryResolver {
   */
   @Query(() => [Category], { name: 'category_get_all' })
   findAll() {
-    //return this.categoryService.findAll();
+    // return this.categoryService.findAll();
     return [
       {
         id: 1,
@@ -45,10 +46,37 @@ export class CategoryResolver {
   async migration_data_test() {
     return await this.categoryService.migration_data_test();
   }
-
-  @Query(() => Category, { name: 'category' })
+  /*
+  query {
+      find_category_by_id (id: 5){
+        name
+      }
+  }
+  */
+  @Query(() => Category, { name: 'find_category_by_id' })
   async findOne(@Args('id', { type: () => Int }) id: number) {
     return await this.categoryService.findOne(id);
+  }
+  /*
+query {
+  search_categories(name: "home", page: 2, limit: 5) {
+    items {
+      id
+      name
+    }
+    totalItems,
+    totalPages,
+    currentPage,
+    itemsPerPage
+  }
+}
+*/
+  @Query(() => PaginatedCategoryResponse, { name: 'search_categories' })
+  async search_categories(
+    @Args('name', { type: () => String, nullable: true }) name: string,
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,) {
+    return await this.categoryService.findByNameWithPagination(name, page, limit);
   }
 
   @Mutation(() => Category)

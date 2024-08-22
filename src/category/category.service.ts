@@ -3,7 +3,7 @@ import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { faker } from '@faker-js/faker';
 
 @Injectable()
@@ -32,6 +32,30 @@ export class CategoryService {
 
   async findOne(id: number) {
     return await this.category.findOne({ where: { id: id } });
+  }
+
+  async findByNameWithPagination(name: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    const [items, totalItems] = await this.category.findAndCount({
+      where: {
+        name: Like(`%${name}%`)
+      },
+      skip: skip,
+      take: limit,
+    });
+
+    if (typeof totalItems !== 'number') {
+      throw new Error('Total items count must be a number');
+    }
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return {
+      items,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    };
   }
 
   update(id: number, updateCategoryInput: UpdateCategoryInput) {

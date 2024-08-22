@@ -10,10 +10,19 @@ type Category {
   name: String
 }
 
+type PaginatedCategoryResponse {
+  items: [Category!]!
+  totalItems: Int!
+  totalPages: Int!
+  currentPage: Int!
+  itemsPerPage: Int!
+}
+
 type Query {
   category_get_all: [Category!]!
   migration_data_test: [Category!]!
-  category(id: Int!): Category!
+  find_category_by_id(id: Int!): Category!
+  search_categories(name: String, page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
 }
 
 type Mutation {
