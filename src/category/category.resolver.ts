@@ -4,6 +4,8 @@ import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { PaginatedCategoryResponse } from './dto/paginated-category-response';
+import { MessageResponse } from 'src/misc/message-response';
+
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -86,7 +88,6 @@ query {
     }
   }
   */
-
   @Mutation(() => Category, { name: 'update_category' })
   async updateCategory(@Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput) {
     const data = await this.categoryService.update(updateCategoryInput.id, updateCategoryInput);
@@ -96,9 +97,22 @@ query {
     throw new Error('Update error');
 
   }
-
-  @Mutation(() => Category, { name: 'delete_category' })
+  /*
+  mutation {
+    delete_category(updateCategoryInput : {id:16, name:"BCO"})
+    {
+     message
+    }
+  }
+  */
+  @Mutation(() => MessageResponse, { name: 'delete_category' })
   async removeCategory(@Args('id', { type: () => Int }) id: number) {
-    return await this.categoryService.remove(id);
+    const data = await this.categoryService.remove(id);
+    if (data.affected > 0) {
+      return {
+        message: `Delete id ${id} success`
+      }
+    }
+    throw new Error(`Action delete not found ID: ${id}`);
   }
 }

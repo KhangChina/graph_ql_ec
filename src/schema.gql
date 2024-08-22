@@ -18,6 +18,10 @@ type PaginatedCategoryResponse {
   itemsPerPage: Int!
 }
 
+type MessageResponse {
+  message: String!
+}
+
 type Query {
   get_all_category(page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
   migration_data_test: [Category!]!
@@ -28,7 +32,7 @@ type Query {
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   update_category(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
+  delete_category(id: Int!): MessageResponse!
 }
 
 input CreateCategoryInput {
