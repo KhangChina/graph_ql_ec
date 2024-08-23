@@ -1,0 +1,57 @@
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { LocationService } from './location.service';
+import { Location } from './entities/location.entity';
+import { CreateLocationInput } from './dto/create-location.input';
+import { UpdateLocationInput } from './dto/update-location.input';
+import * as fs from 'fs';
+import { Province } from './entities/province.entity';
+import { District } from './entities/district.entity';
+
+@Resolver(() => Location)
+export class LocationResolver {
+  constructor(private readonly locationService: LocationService) { }
+
+  // @Mutation(() => Location)
+  // createLocation(@Args('createLocationInput') createLocationInput: CreateLocationInput) {
+  //   return this.locationService.create(createLocationInput);
+  // }
+
+  @Query(() => [Province], { name: 'get_all_province' })
+  get_all_province() {
+    const res = []
+    const province = this.locationService.get_all_province();
+    for (let key_p of province) {
+      let district = this.locationService.get_district_by_ID_province(key_p.id)
+      let districtArray = []
+      for (let key_d of district)
+      {
+        const commune = this.locationService.get_commune_by_ID_district(key_d.id)
+        districtArray.push ({
+          ...key_d,
+          commune : commune
+        })
+      }
+     
+      res.push({
+        ...key_p,
+        district: districtArray
+      })
+    }
+    return res
+  }
+
+  // @Query(() => Location, { name: 'get_all_province' })
+  // findOne(@Args('id', { type: () => Int }) id: number) {
+  //   return this.locationService.findOne(id);
+  // }
+
+  // @Mutation(() => Location)
+  // updateLocation(@Args('updateLocationInput') updateLocationInput: UpdateLocationInput) {
+  //   return this.locationService.update(updateLocationInput.id, updateLocationInput);
+  // }
+
+  // @Mutation(() => Location)
+  // removeLocation(@Args('id', { type: () => Int }) id: number) {
+  //   return this.locationService.remove(id);
+  // }
+}

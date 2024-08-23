@@ -22,11 +22,66 @@ type MessageResponse {
   message: String!
 }
 
+type Commune {
+  """Example field (placeholder)"""
+  id: Int!
+
+  """Example field (placeholder)"""
+  name: String!
+
+  """Cấp độ địa chỉ (Quận huyện, xã, phường, ...)"""
+  level: String!
+
+  """ID Quận huyện"""
+  district_id: Int!
+
+  """Tên Quận Huyện"""
+  district_name: String!
+
+  """ID Tỉnh, Thành phố"""
+  province_id: Int!
+
+  """Tên Tỉnh, Thành phố"""
+  province_name: String!
+}
+
+type District {
+  """Example field (placeholder)"""
+  id: Int!
+
+  """Example field (placeholder)"""
+  name: String!
+
+  """Example field (placeholder)"""
+  level: String!
+
+  """Example field (placeholder)"""
+  province_id: Int!
+
+  """Example field (placeholder)"""
+  commune: [Commune!]!
+}
+
+type Province {
+  """Example field (placeholder)"""
+  id: Int!
+
+  """Example field (placeholder)"""
+  name: String!
+
+  """Example field (placeholder)"""
+  level: String!
+
+  """Example field (placeholder)"""
+  district: [District!]!
+}
+
 type Query {
   get_all_category(page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
   migration_data_test: [Category!]!
   find_category_by_id(id: Int!): Category!
   search_categories(name: String, page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
+  get_all_province: [Province!]!
 }
 
 type Mutation {

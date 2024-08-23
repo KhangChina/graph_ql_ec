@@ -7,6 +7,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './category/entities/category.entity';
+import { Location } from './location/entities/location.entity';
+import { LocationModule } from './location/location.module';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -19,9 +21,9 @@ import { Category } from './category/entities/category.entity';
     username: 'root',
     password: '',
     database: 'ec',
-    entities: [Category],
-    synchronize: false,
-  }), CategoryModule],
+    entities: [Category,Location],
+    synchronize: true,
+  }), CategoryModule, LocationModule],
   controllers: [AppController],
   providers: [AppService],
 })
