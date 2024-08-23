@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './category/entities/category.entity';
 import { Location } from './location/entities/location.entity';
 import { LocationModule } from './location/location.module';
+import { District } from './location/entities/district.entity';
+import { Province } from './location/entities/province.entity';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -21,7 +23,7 @@ import { LocationModule } from './location/location.module';
     username: 'root',
     password: '',
     database: 'ec',
-    entities: [Category,Location],
+    entities: [Category,Location,District,Province],
     synchronize: true,
   }), CategoryModule, LocationModule],
   controllers: [AppController],

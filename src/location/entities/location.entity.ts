@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { District } from './district.entity';
 
-@Entity('Location')
+@Entity('location')
 @ObjectType()
 export class Location {
 
@@ -19,7 +19,7 @@ export class Location {
   level: string;
 
   @ManyToOne(() => District, (district) => district.id)
-  @Field(() => District)
+  @Field(() => District, { nullable: true })
   district: District;
 
 }
