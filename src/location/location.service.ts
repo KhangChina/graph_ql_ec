@@ -14,7 +14,6 @@ export class LocationService {
   ) { }
   async migration_province() {
     const lstProvince = this.get_all_province()
-    console.log(lstProvince)
     await this.province.upsert(lstProvince, ['id'])
   }
 
@@ -24,11 +23,14 @@ export class LocationService {
     for (const key of lstProvince) {
       const lstDis = this.get_district_by_ID_province(key.id)
        lstDis.map(function (i) {
-        //return new District(i.id, i.name, i.level, key)
         lstDistrict.push(new District(i.id, i.name, i.level, key))
       })
     }
    await this.district.upsert(lstDistrict, ['id'])
+  }
+
+  async migration_location(){
+
   }
 
   get_all_province() {
@@ -79,4 +81,5 @@ export class LocationService {
     const res = data_commune.filter((item) => item.district_id === district_id)
     return res
   }
+  
 }

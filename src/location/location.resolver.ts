@@ -12,11 +12,6 @@ import { MessageResponse } from 'src/misc/message-response';
 export class LocationResolver {
   constructor(private readonly locationService: LocationService) { }
 
-  // @Mutation(() => Location)
-  // createLocation(@Args('createLocationInput') createLocationInput: CreateLocationInput) {
-  //   return this.locationService.create(createLocationInput);
-  // }
-
   /*
   query {
    get_migration_province {
@@ -47,6 +42,13 @@ export class LocationResolver {
     }
   }
 
+  @Query(() => MessageResponse, { name: 'get_migration_location' })
+  async get_migration_location() {
+    await this.locationService.migration_location();
+    return {
+      message: `Migration success`
+    }
+  }
 
 
 
