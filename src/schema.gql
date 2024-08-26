@@ -76,7 +76,7 @@ type Query {
   get_migration_district: MessageResponse!
   get_migration_location: MessageResponse!
   get_location_by_id(id: String!): Location!
-  get_location_by_id_dis(district_id: String!, search: String, page: Int! = 1, limit: Int! = 10): Location!
+  get_location_by_id_district(district_id: String!, search: String, page: Int! = 1, limit: Int! = 10): Location!
   search_or_all_province(search: String, page: Int! = 1, limit: Int! = 10): PaginatedProvinceResponse!
 }
 

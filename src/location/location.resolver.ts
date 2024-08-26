@@ -6,7 +6,7 @@ import { UpdateLocationInput } from './dto/update-location.input';
 import { Province } from './entities/province.entity';
 import { District } from './entities/district.entity';
 import { MessageResponse } from 'src/misc/message-response';
-import { PaginatedProvinceResponse } from 'src/category/dto/paginated-province-response';
+import { PaginatedProvinceResponse } from 'src/location/dto/paginated-province-response';
 
 @Resolver(() => Location)
 export class LocationResolver {
