@@ -4,7 +4,7 @@ import { UpdateLocationInput } from './dto/update-location.input';
 import * as fs from 'fs';
 import { Province } from './entities/province.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { District } from './entities/district.entity';
 import { Location } from './entities/location.entity'
 
@@ -95,8 +95,51 @@ export class LocationService {
   }
 
   async get_location_by_id(id: string) {
-    const data = await this.location.findOne({ where: { id },relations: ["district", "district.province"]})
+    const data = await this.location.findOne({ where: { id }, relations: ["district", "district.province"] })
     return data
   }
 
+  async get_location_by_id_district(search: string, page: number, limit: number, district_id: string) {
+    const skip = (page - 1) * limit;
+    const fixedCondition = { district: { id: district_id } };
+    const whereCondition = search ? { ...fixedCondition, name: Like(`%${search}%`) } : fixedCondition;
+    const [items, totalItems] = await this.location.findAndCount({
+      relations: ['district'], 
+      where: whereCondition,
+      skip: skip,
+      take: limit,
+    })
+    if (typeof totalItems !== 'number') {
+      throw new Error('Total items count must be a number');
+    }
+    const totalPages = Math.ceil(totalItems / limit);
+    return {
+      items,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    }
+  }
+
+  async search_or_all_province(search: string, page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    const whereCondition = search ? { name: Like(`%${search}%`) } : {};
+    const [items, totalItems] = await this.province.findAndCount({
+      where: whereCondition,
+      skip: skip,
+      take: limit,
+    })
+    if (typeof totalItems !== 'number') {
+      throw new Error('Total items count must be a number');
+    }
+    const totalPages = Math.ceil(totalItems / limit);
+    return {
+      items,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    }
+  }
 }

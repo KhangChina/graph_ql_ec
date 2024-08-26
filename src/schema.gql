@@ -59,6 +59,14 @@ type Location {
   district: District
 }
 
+type PaginatedProvinceResponse {
+  items: [Province!]!
+  totalItems: Int!
+  totalPages: Int!
+  currentPage: Int!
+  itemsPerPage: Int!
+}
+
 type Query {
   get_all_category(page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
   migration_data_test: [Category!]!
@@ -68,7 +76,8 @@ type Query {
   get_migration_district: MessageResponse!
   get_migration_location: MessageResponse!
   get_location_by_id(id: String!): Location!
-  get_all_province: [Province!]!
+  get_location_by_id_dis(district_id: String!, search: String, page: Int! = 1, limit: Int! = 10): Location!
+  search_or_all_province(search: String, page: Int! = 1, limit: Int! = 10): PaginatedProvinceResponse!
 }
 
 type Mutation {
