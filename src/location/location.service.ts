@@ -94,4 +94,9 @@ export class LocationService {
     return res
   }
 
+  async get_location_by_id(id: string) {
+    const data = await this.location.findOne({ where: { id },relations: ["district", "district.province"]})
+    return data
+  }
+
 }

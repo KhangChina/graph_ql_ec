@@ -67,6 +67,7 @@ type Query {
   get_migration_province: MessageResponse!
   get_migration_district: MessageResponse!
   get_migration_location: MessageResponse!
+  get_location_by_id(id: String!): Location!
   get_all_province: [Province!]!
 }
 

@@ -57,7 +57,26 @@ export class LocationResolver {
     }
   }
 
-
+  /*
+   query {
+   get_location_by_id (id:"00006"){
+    id
+    name
+    district {
+      id
+      name
+      level
+      province {
+        name
+      }
+    }
+    }
+  }
+  */
+  @Query(() => Location, { name: 'get_location_by_id' })
+  async get_location_by_id(@Args('id', { type: () => String }) id: string) {
+    return await this.locationService.get_location_by_id(id);
+  }
 
   @Query(() => [Province], { name: 'get_all_province' })
   get_all_province() {
