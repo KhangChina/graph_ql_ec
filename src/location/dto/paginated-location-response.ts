@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Location } from 'src/location/entities/location.entity'
 @ObjectType()
 export class PaginatedLocationResponse {
-    
+
     @Field(() => [Location])
     items: Location[];
 
