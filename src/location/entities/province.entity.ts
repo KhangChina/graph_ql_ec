@@ -1,14 +1,14 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { District } from './district.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('province')
 @ObjectType()
 export class Province {
-    
-    @PrimaryGeneratedColumn()
-    @Field(() => Int, { description: 'Example field (placeholder)' })
-    id: number;
+
+    @PrimaryColumn()
+    @Field(() => String, { description: 'Example field (placeholder)' })
+    id: string;
 
     @Column()
     @Field(() => String, { description: 'Example field (placeholder)' })
@@ -22,5 +22,10 @@ export class Province {
     @Field(() => [District], { nullable: true })
     district: District[]
 
+    constructor(id, name, level) {
+        this.id = id;
+        this.name = name;
+        this.level = level;
+    }
 }
 

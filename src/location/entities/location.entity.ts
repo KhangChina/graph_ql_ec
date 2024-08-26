@@ -1,14 +1,14 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { District } from './district.entity';
 
 @Entity('location')
 @ObjectType()
 export class Location {
 
-  @PrimaryGeneratedColumn()
-  @Field(() => Int, { description: 'ID' })
-  id: number;
+  @PrimaryColumn()
+  @Field(() => String, { description: 'ID' })
+  id: string;
 
   @Column()
   @Field(() => String, { description: 'Tên' })

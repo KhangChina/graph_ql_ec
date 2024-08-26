@@ -6,6 +6,7 @@ import { UpdateLocationInput } from './dto/update-location.input';
 import * as fs from 'fs';
 import { Province } from './entities/province.entity';
 import { District } from './entities/district.entity';
+import { MessageResponse } from 'src/misc/message-response';
 
 @Resolver(() => Location)
 export class LocationResolver {
@@ -16,6 +17,39 @@ export class LocationResolver {
   //   return this.locationService.create(createLocationInput);
   // }
 
+  /*
+  query {
+   get_migration_province {
+    message
+    }
+  }
+  */
+  @Query(() => MessageResponse, { name: 'get_migration_province' })
+  async get_migration_province() {
+    await this.locationService.migration_province();
+    return {
+      message: `Migration success`
+    }
+  }
+
+  /*
+  query {
+   get_migration_district {
+    message
+    }
+  }
+  */
+  @Query(() => MessageResponse, { name: 'get_migration_district' })
+  async get_migration_district() {
+    await this.locationService.migration_district();
+    return {
+      message: `Migration success`
+    }
+  }
+
+
+
+
   @Query(() => [Province], { name: 'get_all_province' })
   get_all_province() {
     const res = []
@@ -23,15 +57,14 @@ export class LocationResolver {
     for (let key_p of province) {
       let district = this.locationService.get_district_by_ID_province(key_p.id)
       let districtArray = []
-      for (let key_d of district)
-      {
+      for (let key_d of district) {
         const commune = this.locationService.get_commune_by_ID_district(key_d.id)
-        districtArray.push ({
+        districtArray.push({
           ...key_d,
-          commune : commune
+          commune: commune
         })
       }
-     
+
       res.push({
         ...key_p,
         district: districtArray

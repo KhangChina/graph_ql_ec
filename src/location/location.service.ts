@@ -2,18 +2,40 @@ import { Injectable } from '@nestjs/common';
 import { CreateLocationInput } from './dto/create-location.input';
 import { UpdateLocationInput } from './dto/update-location.input';
 import * as fs from 'fs';
+import { Province } from './entities/province.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { District } from './entities/district.entity';
 @Injectable()
 export class LocationService {
+  constructor(
+    @InjectRepository(Province) private province: Repository<Province>,
+    @InjectRepository(District) private district: Repository<District>
+  ) { }
+  async migration_province() {
+    const lstProvince = this.get_all_province()
+    console.log(lstProvince)
+    await this.province.upsert(lstProvince, ['id'])
+  }
+
+  async migration_district() {
+    const lstProvince = this.get_all_province()
+    let lstDistrict: District[] = []
+    for (const key of lstProvince) {
+      const lstDis = this.get_district_by_ID_province(key.id)
+       lstDis.map(function (i) {
+        //return new District(i.id, i.name, i.level, key)
+        lstDistrict.push(new District(i.id, i.name, i.level, key))
+      })
+    }
+   await this.district.upsert(lstDistrict, ['id'])
+  }
 
   get_all_province() {
     const data_province = fs.readFileSync('./src/location/json/province.json', 'utf-8')
     let province = JSON.parse(data_province)
     let response = province.map(function (item) {
-      return {
-        id: item["Mã"],
-        name: item["Tên"],
-        level: item["Cấp"],
-      }
+      return new Province(item["Mã"], item["Tên"], item["Cấp"])
     })
     return response
   }
@@ -29,10 +51,10 @@ export class LocationService {
     let district = JSON.parse(data)
     var newData = district.map(function (item) {
       return {
-        "id": item["Mã"],
-        "name": item["Tên"],
-        "level": item["Cấp"],
-        "province_id": item["Mã TP"]
+        id: item["Mã"],
+        name: item["Tên"],
+        level: item["Cấp"],
+        province_id: item["Mã TP"]
       };
     });
     return newData

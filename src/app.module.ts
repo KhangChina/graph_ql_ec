@@ -25,6 +25,7 @@ import { Province } from './location/entities/province.entity';
     database: 'ec',
     entities: [Category,Location,District,Province],
     synchronize: true,
+    logging:true
   }), CategoryModule, LocationModule],
   controllers: [AppController],
   providers: [AppService],
