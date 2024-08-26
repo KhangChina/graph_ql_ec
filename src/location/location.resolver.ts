@@ -42,6 +42,13 @@ export class LocationResolver {
     }
   }
 
+  /*
+  query {
+   get_migration_location {
+    message
+    }
+  }
+  */
   @Query(() => MessageResponse, { name: 'get_migration_location' })
   async get_migration_location() {
     await this.locationService.migration_location();

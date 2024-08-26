@@ -66,6 +66,7 @@ type Query {
   search_categories(name: String, page: Int! = 1, limit: Int! = 10): PaginatedCategoryResponse!
   get_migration_province: MessageResponse!
   get_migration_district: MessageResponse!
+  get_migration_location: MessageResponse!
   get_all_province: [Province!]!
 }
 

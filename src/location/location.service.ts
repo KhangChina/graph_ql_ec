@@ -6,11 +6,14 @@ import { Province } from './entities/province.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { District } from './entities/district.entity';
+import { Location } from './entities/location.entity'
+
 @Injectable()
 export class LocationService {
   constructor(
     @InjectRepository(Province) private province: Repository<Province>,
-    @InjectRepository(District) private district: Repository<District>
+    @InjectRepository(District) private district: Repository<District>,
+    @InjectRepository(Location) private location: Repository<Location>
   ) { }
   async migration_province() {
     const lstProvince = this.get_all_province()
@@ -22,14 +25,23 @@ export class LocationService {
     let lstDistrict: District[] = []
     for (const key of lstProvince) {
       const lstDis = this.get_district_by_ID_province(key.id)
-       lstDis.map(function (i) {
+      lstDis.map(function (i) {
         lstDistrict.push(new District(i.id, i.name, i.level, key))
       })
     }
-   await this.district.upsert(lstDistrict, ['id'])
+    await this.district.upsert(lstDistrict, ['id'])
   }
 
-  async migration_location(){
+  async migration_location() {
+    const lstDistrict = this.getAllDataDistrict()
+    let lstCommune = []
+    for (const key of lstDistrict) {
+      const lstCom = this.get_commune_by_ID_district(key.id)
+      lstCom.map(function (i) {
+        lstCommune.push(new Location(i.id, i.name, i.level, key))
+      })
+    }
+    await this.location.upsert(lstCommune, ['id'])
 
   }
 
@@ -67,10 +79,10 @@ export class LocationService {
     let commune = JSON.parse(data)
     var newData = commune.map(function (item) {
       return {
-        "id": item["Mã"],
-        "name": item["Tên"],
-        "level": item["Cấp"],
-        "district_id": item["Mã QH"]
+        id: item["Mã"] || item["Mã QH"],
+        name: item["Tên"] || item["Quận Huyện"],
+        level: item["Cấp"],
+        district_id: item["Mã QH"]
       }
     })
     return newData
@@ -81,5 +93,5 @@ export class LocationService {
     const res = data_commune.filter((item) => item.district_id === district_id)
     return res
   }
-  
+
 }

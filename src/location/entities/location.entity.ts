@@ -22,4 +22,10 @@ export class Location {
   @Field(() => District, { nullable: true })
   district: District;
 
+  constructor(id, name, level, district) {
+    this.id = id;
+    this.name = name;
+    this.level = level;
+    this.district = district
+  }
 }
