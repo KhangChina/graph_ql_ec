@@ -104,7 +104,7 @@ export class LocationService {
     const fixedCondition = { district: { id: district_id } };
     const whereCondition = search ? { ...fixedCondition, name: Like(`%${search}%`) } : fixedCondition;
     const [items, totalItems] = await this.location.findAndCount({
-      relations: ['district'], 
+      relations: ['district'],
       where: whereCondition,
       skip: skip,
       take: limit,
@@ -142,4 +142,30 @@ export class LocationService {
       itemsPerPage: limit,
     }
   }
+
+  async get_location_by_id_province(search: string, page: number, limit: number, province_id: string) {
+    const skip = (page - 1) * limit;
+    const fixedCondition = { province: { id: province_id } };
+    const whereCondition = search ? { ...fixedCondition, name: Like(`%${search}%`) } : fixedCondition;
+    const [items, totalItems] = await this.district.findAndCount({
+      relations: ['province'],
+      where: whereCondition,
+      skip: skip,
+      take: limit,
+    })
+
+    if (typeof totalItems !== 'number') {
+      throw new Error('Total items count must be a number');
+    }
+
+    const totalPages = Math.ceil(totalItems / limit);
+    return {
+      items,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      itemsPerPage: limit,
+    }
+  }
+  
 }

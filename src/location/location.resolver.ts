@@ -7,6 +7,8 @@ import { Province } from './entities/province.entity';
 import { District } from './entities/district.entity';
 import { MessageResponse } from 'src/misc/message-response';
 import { PaginatedProvinceResponse } from 'src/location/dto/paginated-province-response';
+import { PaginatedLocationResponse } from './dto/paginated-location-response';
+import { PaginatedDistrictResponse } from './dto/paginated-district-response';
 
 @Resolver(() => Location)
 export class LocationResolver {
@@ -78,15 +80,26 @@ export class LocationResolver {
     return await this.locationService.get_location_by_id(id);
   }
 
-
-  @Query(() => Location, { name: 'get_location_by_id_district' })
+  /*
+      query {
+     get_location_by_id_district (district_id:"754", search:"xã"){
+      items
+      {
+        id
+        name
+        level
+      }
+    }
+    }
+    */
+  @Query(() => PaginatedLocationResponse, { name: 'get_location_by_id_district' })
   async get_location_by_id_district(
     @Args('district_id', { type: () => String }) district_id: string,
     @Args('search', { type: () => String, nullable: true }) search: string,
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number
   ) {
-    return await this.locationService.get_location_by_id_district(search, page, limit, district_id);
+    return await this.locationService.get_location_by_id_district(search, page, limit, district_id)
   }
 
   /*
@@ -107,18 +120,25 @@ export class LocationResolver {
     return await this.locationService.search_or_all_province(search, page, limit)
   }
 
-  // @Query(() => Location, { name: 'get_all_province' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.locationService.findOne(id);
-  // }
-
-  // @Mutation(() => Location)
-  // updateLocation(@Args('updateLocationInput') updateLocationInput: UpdateLocationInput) {
-  //   return this.locationService.update(updateLocationInput.id, updateLocationInput);
-  // }
-
-  // @Mutation(() => Location)
-  // removeLocation(@Args('id', { type: () => Int }) id: number) {
-  //   return this.locationService.remove(id);
-  // }
+  /*
+    query {
+   get_location_by_id_province (district_id:"754", search:"xã"){
+    items
+    {
+      id
+      name
+      level
+    }
+  }
+  }
+  */
+  @Query(() => PaginatedDistrictResponse, { name: 'get_location_by_id_province' })
+  async get_location_by_id_province(
+    @Args('province_id', { type: () => String }) province_id: string,
+    @Args('search', { type: () => String, nullable: true }) search: string,
+    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
+    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number
+  ) {
+    return await this.locationService.get_location_by_id_province(search, page, limit, province_id)
+  }
 }
