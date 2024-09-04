@@ -11,6 +11,7 @@ import { Location } from './location/entities/location.entity';
 import { LocationModule } from './location/location.module';
 import { District } from './location/entities/district.entity';
 import { Province } from './location/entities/province.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -26,7 +27,7 @@ import { Province } from './location/entities/province.entity';
     entities: [Category,Location,District,Province],
     synchronize: true,
     logging:false,
-  }), CategoryModule, LocationModule],
+  }), CategoryModule, LocationModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
