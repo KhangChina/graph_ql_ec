@@ -1,6 +1,9 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { UserLocation } from 'src/user_location/entities/user_location.entity';
 
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity('user')
 @ObjectType()
 export class User {
 
@@ -39,5 +42,9 @@ export class User {
   @Column()
   @Field(() => String, { nullable: true, description: 'Status active: true, false' })
   isPhone: string;
-  
+
+  @OneToMany(() => UserLocation, userLocation => userLocation.user)
+  @Field(() => UserLocation, { nullable: true })
+  user_location: UserLocation[];
+
 }
