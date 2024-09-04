@@ -74,10 +74,12 @@ type User {
 
   """Status active: true, false"""
   isPhone: String
-  user_location: UserLocation
+  user_location: [UserLocation!]
 }
 
 type UserLocation {
+  """id"""
+  id: String!
   user: User
   location: Location
 
@@ -146,7 +148,6 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createUserLocation(createUserLocationInput: CreateUserLocationInput!): UserLocation!
-  updateUserLocation(updateUserLocationInput: UpdateUserLocationInput!): UserLocation!
   removeUserLocation(id: Int!): UserLocation!
 }
 
@@ -162,23 +163,52 @@ input UpdateCategoryInput {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
+  """Username User"""
+  username: String
 
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """Password User"""
+  password: String
+
+  """Last Name"""
+  last_name: String
+
+  """First Name"""
+  first_name: String
+
+  """Phone number"""
+  phone: String
+
+  """Email"""
+  email: String
+  user_location: CreateUserLocationInput
 }
 
 input CreateUserLocationInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """ID"""
+  id: String!
+
+  """Address"""
+  address: String!
 }
 
-input UpdateUserLocationInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+input UpdateUserInput {
+  """Username User"""
+  username: String
+
+  """Password User"""
+  password: String
+
+  """Last Name"""
+  last_name: String
+
+  """First Name"""
+  first_name: String
+
+  """Phone number"""
+  phone: String
+
+  """Email"""
+  email: String
+  user_location: CreateUserLocationInput
   id: Int!
 }

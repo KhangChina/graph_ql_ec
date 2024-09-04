@@ -1,7 +1,13 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { CreateLocationInput } from 'src/location/dto/create-location.input';
 
 @InputType()
 export class CreateUserLocationInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+
+  @Field(() => String, { description: 'ID' })
+  id: string;
+
+  @Field(() => String, { description: 'Address' })
+  address: string;
+
 }

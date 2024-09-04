@@ -44,7 +44,7 @@ export class User {
   isPhone: string;
 
   @OneToMany(() => UserLocation, userLocation => userLocation.user)
-  @Field(() => UserLocation, { nullable: true })
+  @Field(() => [UserLocation], { nullable: true })
   user_location: UserLocation[];
 
 }

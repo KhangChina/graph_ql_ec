@@ -23,10 +23,10 @@ export class UserLocationResolver {
     return this.userLocationService.findOne(id);
   }
 
-  @Mutation(() => UserLocation)
-  updateUserLocation(@Args('updateUserLocationInput') updateUserLocationInput: UpdateUserLocationInput) {
-    return this.userLocationService.update(updateUserLocationInput.id, updateUserLocationInput);
-  }
+  // @Mutation(() => UserLocation)
+  // updateUserLocation(@Args('updateUserLocationInput') updateUserLocationInput: UpdateUserLocationInput) {
+  //   return this.userLocationService.update(updateUserLocationInput.id, updateUserLocationInput);
+  // }
 
   @Mutation(() => UserLocation)
   removeUserLocation(@Args('id', { type: () => Int }) id: number) {

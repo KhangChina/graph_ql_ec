@@ -6,10 +6,31 @@ import { UpdateUserInput } from './dto/update-user.input';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
-
+  constructor(private readonly userService: UserService) { }
+  // mutation {
+  //   createUser(createUserInput : 
+  //     {
+        
+  //       first_name:"Nguyễn",
+  //       last_name:"Khang",
+  //       username:"KhangNguyen",
+  //       password:"123",
+  //       phone:"",
+  //       email:"nguyenkhang1400@gmail.com"
+  //       user_location:
+  //       {
+  //           id:"3",
+  //           address:"Số 3, đường 16"
+  //       }
+  //     }
+  //   )
+  //   {
+  //    username
+  //   }
+  // }
   @Mutation(() => User)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    console.log(createUserInput)
     return this.userService.create(createUserInput);
   }
 

@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocationInput } from './dto/create-location.input';
-import { UpdateLocationInput } from './dto/update-location.input';
 import * as fs from 'fs';
 import { Province } from './entities/province.entity';
 import { InjectRepository } from '@nestjs/typeorm';

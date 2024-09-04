@@ -1,10 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { LocationService } from './location.service';
 import { Location } from './entities/location.entity';
-import { CreateLocationInput } from './dto/create-location.input';
-import { UpdateLocationInput } from './dto/update-location.input';
-import { Province } from './entities/province.entity';
-import { District } from './entities/district.entity';
 import { MessageResponse } from 'src/misc/message-response';
 import { PaginatedProvinceResponse } from 'src/location/dto/paginated-province-response';
 import { PaginatedLocationResponse } from './dto/paginated-location-response';
