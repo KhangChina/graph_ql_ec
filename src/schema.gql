@@ -47,6 +47,44 @@ type District {
   locations: [Location!]
 }
 
+type User {
+  """ID Users"""
+  id: Int!
+
+  """Username User"""
+  username: String
+
+  """Password User"""
+  password: String
+
+  """Last Name"""
+  last_name: String
+
+  """First Name"""
+  first_name: String
+
+  """Phone number"""
+  phone: String
+
+  """Email"""
+  email: String
+
+  """Status active: true, false"""
+  isEmail: String
+
+  """Status active: true, false"""
+  isPhone: String
+  user_location: UserLocation
+}
+
+type UserLocation {
+  user: User
+  location: Location
+
+  """Address"""
+  address: String!
+}
+
 type Location {
   """ID"""
   id: String!
@@ -57,6 +95,7 @@ type Location {
   """Cấp độ địa chỉ (Quận huyện, xã, phường, ...)"""
   level: String!
   district: District
+  user_location: UserLocation
 }
 
 type PaginatedProvinceResponse {
@@ -95,12 +134,20 @@ type Query {
   get_location_by_id_district(district_id: String!, search: String, page: Int! = 1, limit: Int! = 10): PaginatedLocationResponse!
   search_or_all_province(search: String, page: Int! = 1, limit: Int! = 10): PaginatedProvinceResponse!
   get_location_by_id_province(province_id: String!, search: String, page: Int! = 1, limit: Int! = 10): PaginatedDistrictResponse!
+  user(id: Int!): User!
+  userLocation(id: Int!): UserLocation!
 }
 
 type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   update_category(updateCategoryInput: UpdateCategoryInput!): Category!
   delete_category(id: Int!): MessageResponse!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+  createUserLocation(createUserLocationInput: CreateUserLocationInput!): UserLocation!
+  updateUserLocation(updateUserLocationInput: UpdateUserLocationInput!): UserLocation!
+  removeUserLocation(id: Int!): UserLocation!
 }
 
 input CreateCategoryInput {
@@ -111,5 +158,27 @@ input CreateCategoryInput {
 input UpdateCategoryInput {
   """Name Categories"""
   name: String
+  id: Int!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserLocationInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateUserLocationInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }

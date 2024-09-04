@@ -13,6 +13,8 @@ import { District } from './location/entities/district.entity';
 import { Province } from './location/entities/province.entity';
 import { UserModule } from './user/user.module';
 import { UserLocationModule } from './user_location/user_location.module';
+import { UserLocation } from './user_location/entities/user_location.entity';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -25,7 +27,7 @@ import { UserLocationModule } from './user_location/user_location.module';
     username: 'root',
     password: '',
     database: 'ec',
-    entities: [Category,Location,District,Province],
+    entities: [Category,Location,District,Province,User,UserLocation],
     synchronize: true,
     logging:false,
   }), CategoryModule, LocationModule, UserModule, UserLocationModule],

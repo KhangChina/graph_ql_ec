@@ -6,16 +6,19 @@ import { Location } from 'src/location/entities/location.entity';
 @Entity('user_location')
 @ObjectType()
 export class UserLocation {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => User, user => user.id)
+  @Field(() => User, { nullable: true })
   user: User;
 
   @ManyToOne(() => Location, location => location.id)
+  @Field(() => Location, { nullable: true })
   location: Location;
 
   @Column({ nullable: true })
+  @Field(() => String, { description: 'Address' })
   address: string;
+
 }
