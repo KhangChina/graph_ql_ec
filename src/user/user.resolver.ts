@@ -14,9 +14,8 @@ export class UserResolver {
 
   ) { }
   // mutation {
-  //   createUser(createUserInput : 
+  //   create_user(createUserInput : 
   //     {
-        
   //       first_name:"Nguyễn",
   //       last_name:"Khang",
   //       username:"KhangNguyen",
@@ -31,18 +30,19 @@ export class UserResolver {
   //     }
   //   )
   //   {
-  //    username
-  //   }
-  // }
-  @Mutation(() => MessageResponse,{ name: 'create_user' })
+  //    message
+  //    }
+  //  }
+  @Mutation(() => MessageResponse, { name: 'create_user' })
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-   // return await this.userService.create(createUserInput);
     //Check location
-    const user_location = await this.locationService.checkLocationByID(createUserInput.user_location.id)
-    if(!user_location)
-    {
-      return {
-        message: `Location not found !`
+    const user_location = null;  
+    if (createUserInput.user_location) {
+      const user_location = await this.locationService.checkLocationByID(createUserInput.user_location.id)
+      if (!user_location) {
+        return {
+          message: `Location not found !`
+        }
       }
     }
     //Create user
@@ -52,6 +52,8 @@ export class UserResolver {
     }
     const new_created = await this.userService.create(new_user)
     console.log(new_created)
+
+
     //Get location
     return {
       message: `ok`
