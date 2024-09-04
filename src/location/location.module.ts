@@ -8,5 +8,6 @@ import { District } from './entities/district.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Location,Province,District])],
   providers: [LocationResolver, LocationService],
+  exports: [LocationService]
 })
 export class LocationModule { }

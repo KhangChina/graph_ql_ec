@@ -166,4 +166,9 @@ export class LocationService {
     }
   }
   
+  async checkLocationByID(id: string)
+  {
+    const data = await this.location.findOne({ where: { id }})
+    return data;
+  }
 }
