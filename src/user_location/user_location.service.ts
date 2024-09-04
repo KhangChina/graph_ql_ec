@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserLocationInput } from './dto/create-user_location.input';
 import { UpdateUserLocationInput } from './dto/update-user_location.input';
+import { UserLocation } from './entities/user_location.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserLocationService {
-  create(createUserLocationInput: CreateUserLocationInput) {
+  constructor(
+    @InjectRepository(UserLocation) private userLocation: Repository<UserLocation>,
+  ) { }
+  async create(data: any) {
+    const new_userLocation = await this.userLocation.create(data)
+   // const 
     return 'This action adds a new userLocation';
   }
 

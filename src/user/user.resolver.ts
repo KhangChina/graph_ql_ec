@@ -36,7 +36,7 @@ export class UserResolver {
   @Mutation(() => MessageResponse, { name: 'create_user' })
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     //Check location
-    const user_location = null;  
+    const user_location = null;
     if (createUserInput.user_location) {
       const user_location = await this.locationService.checkLocationByID(createUserInput.user_location.id)
       if (!user_location) {
@@ -51,12 +51,14 @@ export class UserResolver {
       user_location
     }
     const new_created = await this.userService.create(new_user)
-    console.log(new_created)
+    
+    //Create Location User
+    if (user_location && new_created) {
 
-
+    }
     //Get location
     return {
-      message: `ok`
+      message: `Create data success`
     }
   }
 
