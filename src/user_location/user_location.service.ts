@@ -11,8 +11,13 @@ export class UserLocationService {
   ) { }
   async create(data: any) {
     const new_userLocation = await this.userLocation.create(data)
-   // const 
-    return 'This action adds a new userLocation';
+    try {
+      const save_userLocation = await this.userLocation.save(new_userLocation);
+      return save_userLocation ? save_userLocation : null;
+    } catch (error) {
+      console.error('Error saving userLocation:', error);
+      return null;
+    }
   }
 
   findAll() {
