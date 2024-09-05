@@ -106,10 +106,14 @@ $ npm run start:prod
 ## Tài liệu GrapQL
 ![grapql](./document/grapql.png)
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
+## Chức năng cơ bản trên database có thể xây dựng
+- [x] Đồng bộ dữ liệu danh mục địa chỉ [Quốc gia](https://danhmuchanhchinh.gso.gov.vn/)
+- [x] Tạo user và sổ địa chỉ
+- [ ] Quản lý hàng hóa không giới hạn trường data cho sản phẩm (```product_meta```)
+- [ ] Quản lý kho (```warehouse``` - ```inventory``` - ```location```)
+- [ ] Chức năng đồng bộ giỏ hàng giữa các platforms ```cart``` - ```shopping_session```
+- [ ] Quản lý các loại hình thanh toán
+- [ ] Quản lý promotion mở rộng theo nhu cầu khách hàng
 ## Stay in touch
 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
