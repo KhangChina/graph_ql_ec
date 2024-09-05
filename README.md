@@ -103,7 +103,7 @@ $ npm run start:prod
      }
   }
 ```
-## Tài liệu GrapQL
+## Tài liệu GraphQL
 ![grapql](./document/grapql.png)
 
 ## Chức năng cơ bản trên database có thể xây dựng
