@@ -24,8 +24,8 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+[Thiết kế](https://app.diagrams.net/#G1tyZhvvMZ0RhUeB_L9D7wzfRAQZWnWJPn#%7B%22pageId%22%3A%2218393KkFEV-PBp8WIFMW%22%7D) mô hình database.
+![Diagram](./document/diagram.png)
 ## Installation
 
 ```bash
@@ -45,18 +45,66 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
+## Test API Cơ Bản
+#### Khởi tạo danh mục địa chỉ
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+// Thành phố
+   query {
+   get_migration_province {
+    message
+    }
+  }
+// Huyện
+  query {
+   get_migration_district {
+    message
+    }
+  }
+// Xã phường  
+  query {
+   get_migration_location {
+    message
+    }
+  }
 ```
+
+#### Lấy thông tin địa chỉ
+```bash
+  query {
+   search_or_all_province {
+    items
+    {
+      name
+    }
+  }
+}
+```
+
+#### Tạo User và sổ địa chỉ
+```bash
+   mutation {
+     create_user(createUserInput : 
+       {
+         first_name:"Nguyễn",
+         last_name:"Khang",
+         username:"KhangNguyen",
+         password:"123",
+         phone:"",
+         email:"nguyenkhang1400@gmail.com"
+         user_location:
+         {
+             id:"00007",
+             address:"Số 3, đường 16"
+         }
+       }
+     )
+     {
+      message
+     }
+  }
+```
+## Tài liệu GrapQL
+![]()  
 
 ## Support
 
