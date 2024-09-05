@@ -68,7 +68,7 @@ $ npm run start:prod
   }
 ```
 
-#### Lấy thông tin địa chỉ
+#### Lấy thông tin địa chỉ example
 ```bash
   query {
    search_or_all_province {
@@ -80,7 +80,7 @@ $ npm run start:prod
 }
 ```
 
-#### Tạo User và sổ địa chỉ
+#### Tạo User và sổ địa chỉ example
 ```bash
    mutation {
      create_user(createUserInput : 
@@ -104,7 +104,7 @@ $ npm run start:prod
   }
 ```
 ## Tài liệu GrapQL
-![]()  
+![grapql](./document/grapql.png)
 
 ## Support
 
