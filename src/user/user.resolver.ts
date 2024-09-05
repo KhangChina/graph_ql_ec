@@ -47,6 +47,7 @@ export class UserResolver {
       }
     }
     //Create user
+    createUserInput.password =  await this.userService.hashPassword(createUserInput.password);
     const new_user = {
       ...createUserInput,
       user_location
@@ -61,20 +62,14 @@ export class UserResolver {
           address: createUserInput.user_location.address
         })
     }
-    //Get location
     return {
       message: `Create data success: ${new_user_created.id}`
     }
   }
 
-  @Query(() => [User], { name: 'user' })
-  findAll() {
-    return this.userService.findAll();
-  }
-
-  @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.findOne(id);
+  @Query(() => User, { name: 'get_user_by_id' })
+  async findOne(@Args('id', { type: () => String }) id: string) {
+    return await this.userService.findOne(id);
   }
 
   // @Mutation(() => User)

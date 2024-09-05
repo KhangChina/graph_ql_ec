@@ -136,7 +136,7 @@ type Query {
   get_location_by_id_district(district_id: String!, search: String, page: Int! = 1, limit: Int! = 10): PaginatedLocationResponse!
   search_or_all_province(search: String, page: Int! = 1, limit: Int! = 10): PaginatedProvinceResponse!
   get_location_by_id_province(province_id: String!, search: String, page: Int! = 1, limit: Int! = 10): PaginatedDistrictResponse!
-  user(id: Int!): User!
+  get_user_by_id(id: String!): User!
   userLocation(id: Int!): UserLocation!
 }
 

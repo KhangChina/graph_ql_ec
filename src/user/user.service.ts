@@ -4,7 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(
@@ -24,9 +24,15 @@ export class UserService {
   findAll() {
     return `This action returns all user`;
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // query {
+  //   get_user_by_id(id:"3f580816-efd6-4008-bc7a-81b42faef1a0"){
+  //     username
+  //     last_name
+  //     first_name
+  //   }
+  //  }
+  async findOne(id: string) {
+    return await this.user.findOne({ where: { id: id } })
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
@@ -36,4 +42,16 @@ export class UserService {
   remove(id: number) {
     return `This action removes a #${id} user`;
   }
+
+  async hashPassword(password: string): Promise<string> {
+    const saltRounds = 5; 
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  }
+
+  async comparePassword(password: string, hash: string): Promise<boolean> {
+    const match = await bcrypt.compare(password, hash);
+    return match;
+  }
+
 }
