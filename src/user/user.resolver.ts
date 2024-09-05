@@ -5,13 +5,14 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { LocationService } from 'src/location/location.service';
 import { MessageResponse } from 'src/misc/message-response';
+import { UserLocationService } from 'src/user_location/user_location.service';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
-    private readonly locationService: LocationService
-
+    private readonly locationService: LocationService,
+    private readonly userLocationService: UserLocationService
   ) { }
   // mutation {
   //   create_user(createUserInput : 
@@ -24,21 +25,21 @@ export class UserResolver {
   //       email:"nguyenkhang1400@gmail.com"
   //       user_location:
   //       {
-  //           id:"3",
+  //           id:"00007",
   //           address:"Số 3, đường 16"
   //       }
   //     }
   //   )
   //   {
   //    message
-  //    }
+  //   }
   //  }
   @Mutation(() => MessageResponse, { name: 'create_user' })
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     //Check location
-    const user_location = null;
+    let user_location = null;
     if (createUserInput.user_location) {
-      const user_location = await this.locationService.checkLocationByID(createUserInput.user_location.id)
+      user_location = await this.locationService.checkLocationByID(createUserInput.user_location.id)
       if (!user_location) {
         return {
           message: `Location not found !`
@@ -50,15 +51,19 @@ export class UserResolver {
       ...createUserInput,
       user_location
     }
-    const new_created = await this.userService.create(new_user)
-    
-    //Create Location User
-    if (user_location && new_created) {
-
+    const new_user_created: any = await this.userService.create(new_user)
+    //Create location user
+    if (user_location && new_user_created) {
+      const new_user_location = await this.userLocationService.create(
+        {
+          user: new_user_created,
+          location: user_location,
+          address: createUserInput.user_location.address
+        })
     }
     //Get location
     return {
-      message: `Create data success`
+      message: `Create data success: ${new_user_created.id}`
     }
   }
 
@@ -72,10 +77,10 @@ export class UserResolver {
     return this.userService.findOne(id);
   }
 
-  @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
-  }
+  // @Mutation(() => User)
+  // updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+  //   return this.userService.update(updateUserInput.id, updateUserInput);
+  // }
 
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {

@@ -7,9 +7,9 @@ import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColum
 @ObjectType()
 export class User {
 
-  @PrimaryGeneratedColumn()
-  @Field(() => Int, { description: 'ID Users' })
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  @Field(() => String, { description: 'ID user' })
+  id: string;
   
   @Column()
   @Field(() => String, { nullable: true, description: 'Username User' })

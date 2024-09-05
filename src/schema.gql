@@ -48,8 +48,8 @@ type District {
 }
 
 type User {
-  """ID Users"""
-  id: Int!
+  """ID user"""
+  id: String!
 
   """Username User"""
   username: String
@@ -145,7 +145,6 @@ type Mutation {
   update_category(updateCategoryInput: UpdateCategoryInput!): Category!
   delete_category(id: Int!): MessageResponse!
   create_user(createUserInput: CreateUserInput!): MessageResponse!
-  updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createUserLocation(createUserLocationInput: CreateUserLocationInput!): UserLocation!
   removeUserLocation(id: Int!): UserLocation!
@@ -189,26 +188,4 @@ input CreateUserLocationInput {
 
   """Address"""
   address: String!
-}
-
-input UpdateUserInput {
-  """Username User"""
-  username: String
-
-  """Password User"""
-  password: String
-
-  """Last Name"""
-  last_name: String
-
-  """First Name"""
-  first_name: String
-
-  """Phone number"""
-  phone: String
-
-  """Email"""
-  email: String
-  user_location: CreateUserLocationInput
-  id: Int!
 }

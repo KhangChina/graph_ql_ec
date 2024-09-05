@@ -7,5 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [TypeOrmModule.forFeature([UserLocation])],
   providers: [UserLocationResolver, UserLocationService],
+  exports: [UserLocationService]
 })
 export class UserLocationModule {}
