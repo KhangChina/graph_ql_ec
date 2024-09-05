@@ -111,14 +111,9 @@ $ npm run start:prod
 - [x] Tạo user và sổ địa chỉ
 - [ ] Quản lý hàng hóa không giới hạn trường data cho sản phẩm (```product_meta```)
 - [ ] Quản lý kho (```warehouse``` - ```inventory``` - ```location```)
-- [ ] Chức năng đồng bộ giỏ hàng giữa các platforms ```cart``` - ```shopping_session```
+- [ ] Chức năng đồng bộ giỏ hàng giữa các platforms (```cart``` - ```shopping_session```)
 - [ ] Quản lý các loại hình thanh toán
 - [ ] Quản lý promotion mở rộng theo nhu cầu khách hàng
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
